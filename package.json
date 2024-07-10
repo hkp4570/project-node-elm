@@ -1,0 +1,30 @@
+{
+  "name": "project-node-elm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hkp4570/project-node-elm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hkp4570/project-node-elm/issues"
+  },
+  "homepage": "https://github.com/hkp4570/project-node-elm#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-register": "^6.26.0",
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.1.4",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
