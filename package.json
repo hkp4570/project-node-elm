@@ -25,6 +25,10 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "mongodb": "^5.9.2",
+    "mongoose": "^5.13.22",
+    "node-fetch": "^2.6.6",
+    "pinyin": "^3.1.0"
   }
 }
