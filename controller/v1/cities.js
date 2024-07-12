@@ -31,6 +31,8 @@ class CityHandle extends AddressComponent {
       switch (type) {
         case 'guess':
           const city = await this.getCityName(req);
+          console.log(Cities, 'Cities')
+          console.log(Cities.cityGuess)
           cityinfo = await Cities.cityGuess(city);
       }
     } catch (error) {

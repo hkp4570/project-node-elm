@@ -1,4 +1,5 @@
 const express =  require('express');
+require('./mongodb/db');
 import routes from './routes/index';
 
 const port = 9527;

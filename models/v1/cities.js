@@ -1,20 +1,25 @@
+'use strict';
+
 import mongoose from 'mongoose';
-import cityData from '../../initData/cities';
+import cityData from '../../initData/cities'
 
 const citySchema = new mongoose.Schema({
-  data: {},
-})
+  data: {}
+});
 
-citySchema.static.cityGuess = function (name){
-  console.log(name, 'name');
+citySchema.statics.cityGuess = function(name){
+  return new Promise(async (resolve, reject) => {
+    console.log(name,'name')
+  })
 }
 
-const Cities = mongoose.model('Cities',citySchema);
+const Cities = mongoose.model('Cities', citySchema);
 
-Cities.findOne((err,data) => {
-  if(!data){
-    Cities.create({data: cityData})
+
+Cities.findOne((err, data) => {
+  if (!data) {
+    Cities.create({data: cityData});
   }
-})
+});
 
-export default Cities;
+export default Cities
