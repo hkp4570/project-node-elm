@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 const chalk = require('chalk');
+const config = require('../config/default');
 
-mongoose.connect('mongodb://127.0.0.1/elm');
+mongoose.connect(config.url);
 mongoose.Promise = global.Promise;
 
 const db = mongoose.connection;
