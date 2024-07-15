@@ -6,6 +6,7 @@ class CityHandle extends AddressComponent {
   constructor() {
     super();
     this.getCity = this.getCity.bind(this);
+    this.getExactAddress = this.getExactAddress.bind(this);
   };
 
   async getCityName(req) {
@@ -73,6 +74,19 @@ class CityHandle extends AddressComponent {
       res.send({
         name: 'ERROR_DATA',
         message: '获取数据失败',
+      });
+    }
+  }
+
+  async getExactAddress(req, res) {
+    try{
+      const position = await this.geocoder(req);
+      res.send(position);
+    }catch (err){
+      console.log('获取精确位置信息失败');
+      res.send({
+        name: 'ERROR_DATA',
+        message: '获取精确位置信息失败',
       });
     }
   }

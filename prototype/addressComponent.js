@@ -23,10 +23,11 @@ class AddressComponent extends BaseComponent {
           key: this.key,
         });
         if (result.status === '1') {
-          const location = result.rectangle.split(',');
+          const location = result.rectangle.split(';');
+          const geoArr = location[0].split(',');
           const cityInfo = {
-            lat: location[0],
-            lng: location[1],
+            lat: geoArr[0],
+            lng: geoArr[1],
             city: result.city,
           }
           resolve(cityInfo);
@@ -35,6 +36,26 @@ class AddressComponent extends BaseComponent {
         reject(e);
       }
     })
+  }
+
+  // 获取精确的地址
+  async geocoder(req) {
+    try{
+      const address = await this.guessPosition(req);
+      const params = {
+        key: this.key,
+        location: address.lat + ',' + address.lng,
+      }
+      const resp = await this.fetch('https://restapi.amap.com/v3/geocode/regeo', params);
+      if(resp && resp.status === '1'){
+        return resp;
+      }else{
+        throw new Error('geocoder获取定位失败');
+      }
+    }catch (err){
+      console.log('geocoder获取定位失败', err);
+      throw new Error(err);
+    }
   }
 }
 
