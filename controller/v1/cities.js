@@ -11,7 +11,9 @@ class CityHandle extends AddressComponent {
   async getCityName(req) {
     try {
       const cityInfo = await this.guessPosition(req);
-      const pinyinArr = pinyin(cityInfo.city, {
+      const len = cityInfo.city.length;
+      const city = cityInfo.city.substring(0, len - 1);
+      const pinyinArr = pinyin(city, {
         style: pinyin.STYLE_NORMAL,
       })
       let cityName = '';
@@ -20,23 +22,38 @@ class CityHandle extends AddressComponent {
       })
       return cityName;
     } catch (e) {
-      return 'beijingshi';
+      return 'beijing';
     }
   }
 
-  async getCity(req, res, next) {
+  async getCity(req, res) {
     const type = req.query.type;
-    let cityinfo;
+    let cityInfo;
     try {
       switch (type) {
         case 'guess':
           const city = await this.getCityName(req);
-          console.log(Cities, 'Cities')
-          console.log(Cities.cityGuess)
-          cityinfo = await Cities.cityGuess(city);
+          cityInfo = await Cities.cityGuess(city);
+          break;
+        case 'hot':
+          cityInfo = await Cities.cityHot();
+          break;
+        case 'group':
+          cityInfo = await Cities.cityGroup();
+          break;
+        default:
+          res.json({
+            name: 'ERROR_QUERY_TYPE',
+            message: '参数错误',
+          });
+          return;
       }
+      res.send(cityInfo);
     } catch (error) {
-
+      res.send({
+        name: 'ERROR_DATA',
+        message: '获取数据失败',
+      });
     }
   }
 }
