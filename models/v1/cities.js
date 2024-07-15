@@ -61,6 +61,30 @@ citySchema.statics.cityGroup = function () {
   })
 }
 
+citySchema.statics.getCityById = function (id) {
+  console.log(id, 'id')
+  return new Promise(async (resolve, reject) => {
+    try {
+      const city = await this.findOne();
+      const cityObj = city.data;
+      Object.entries(cityObj).forEach(item => {
+        if (item[0] !== '_id' && item[0] !== 'hotCities') {
+          const cityItem = item[1].find(f => f.id == id);
+          if (cityItem){
+            resolve(cityItem);
+          }
+        }
+      })
+    } catch (err) {
+      reject({
+        name: 'ERROR_DATA',
+        message: '查找数据失败',
+      });
+      console.error(err);
+    }
+  })
+}
+
 const Cities = mongoose.model('Cities', citySchema);
 
 
