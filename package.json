@@ -32,6 +32,7 @@
     "mongodb": "^5.9.2",
     "mongoose": "^5.13.22",
     "node-fetch": "^2.6.6",
-    "pinyin": "^3.1.0"
+    "pinyin": "^3.1.0",
+    "svg-captcha": "^1.4.0"
   }
 }
