@@ -7,7 +7,7 @@ class Captchas{
     const captcha = svgCaptcha.create({
       width: 120
     });
-    req.session.captcha = captcha.text;
+    res.cookie('cap', captcha.text, { maxAge: 300000, httpOnly: true });
     res.status(200).send({status:1,code:captcha.data});
   }
 }

@@ -8,7 +8,6 @@ class UserHandle extends AddressComponent {
   }
 
   async getUserInfo(req, res, next) {
-    console.log(req.session, 'req.session');
     const sid = req.session.user_id;
     const qid = req.query.user_id;
     const user_id = sid || qid;
