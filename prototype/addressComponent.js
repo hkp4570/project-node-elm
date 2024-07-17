@@ -57,6 +57,24 @@ class AddressComponent extends BaseComponent {
       throw new Error(err);
     }
   }
+  // 搜索地址
+  async searchPlace(keyword, cityName, type = 'search'){
+      try{
+        const resObj = await this.fetch('http://apis.map.qq.com/ws/place/v1/search',{
+          key: 'RLHBZ-WMPRP-Q3JDS-V2IQA-JNRFH-EJBHL',
+          keyword: encodeURIComponent(keyword),
+          boundary: 'region(' + encodeURIComponent(cityName) + ',0)',
+          page_size: 10,
+        })
+        if(resObj.status === 0){
+          return resObj;
+        }else{
+          throw new Error('搜索位置失败');
+        }
+      }catch (err) {
+        throw new Error(err);
+      }
+  }
 }
 
 export default AddressComponent;

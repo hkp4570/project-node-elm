@@ -62,7 +62,6 @@ citySchema.statics.cityGroup = function () {
 }
 
 citySchema.statics.getCityById = function (id) {
-  console.log(id, 'id')
   return new Promise(async (resolve, reject) => {
     try {
       const city = await this.findOne();
