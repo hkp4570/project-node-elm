@@ -175,6 +175,14 @@ class UserHandler extends AddressComponent {
       }
     })
   }
+
+  async signout(req,res){
+    req.session.destroy();
+    res.send({
+      status: 1,
+      message: '退出成功'
+    })
+  }
 }
 
 export default new UserHandler();
