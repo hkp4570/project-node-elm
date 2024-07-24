@@ -40,40 +40,61 @@ class AddressComponent extends BaseComponent {
 
   // 获取精确的地址
   async geocoder(req) {
-    try{
+    try {
       const address = await this.guessPosition(req);
       const params = {
         key: this.key,
         location: address.lat + ',' + address.lng,
       }
       const resp = await this.fetch('https://restapi.amap.com/v3/geocode/regeo', params);
-      if(resp && resp.status === '1'){
+      if (resp && resp.status === '1') {
         return resp;
-      }else{
+      } else {
         throw new Error('geocoder获取定位失败');
       }
-    }catch (err){
+    } catch (err) {
       console.log('geocoder获取定位失败', err);
       throw new Error(err);
     }
   }
+
   // 搜索地址
-  async searchPlace(keyword, cityName, type = 'search'){
-      try{
-        const resObj = await this.fetch('http://apis.map.qq.com/ws/place/v1/search',{
-          key: 'RLHBZ-WMPRP-Q3JDS-V2IQA-JNRFH-EJBHL',
-          keyword: encodeURIComponent(keyword),
-          boundary: 'region(' + encodeURIComponent(cityName) + ',0)',
-          page_size: 10,
-        })
-        if(resObj.status === 0){
-          return resObj;
-        }else{
-          throw new Error('搜索位置失败');
-        }
-      }catch (err) {
-        throw new Error(err);
+  async searchPlace(keyword, cityName, type = 'search') {
+    try {
+      const resObj = await this.fetch('http://apis.map.qq.com/ws/place/v1/search', {
+        key: 'RLHBZ-WMPRP-Q3JDS-V2IQA-JNRFH-EJBHL',
+        keyword: encodeURIComponent(keyword),
+        boundary: 'region(' + encodeURIComponent(cityName) + ',0)',
+        page_size: 10,
+      })
+      if (resObj.status === 0) {
+        return resObj;
+      } else {
+        throw new Error('搜索位置失败');
       }
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  // 根据geohash获取地址信息
+  async getPois(lat, lng) {
+    try {
+      const params = {
+        key: this.key,
+        location: lng + ',' + lat,
+        output: 'json',
+      };
+      const res = await this.fetch('https://restapi.amap.com/v3/geocode/regeo', params);
+      if (res.status === '1') {
+        return res;
+      } else {
+        throw new Error('根据geohash获取地址信息失败');
+      }
+    } catch (err) {
+      console.log('getpois获取定位失败', err)
+      throw new Error(err);
+    }
   }
 }
 
