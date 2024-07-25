@@ -22,6 +22,22 @@ class Category extends BaseComponent {
     }
   }
 
+  async findById(id) {
+    try {
+      const CateEntity = await CategoryModel.findOne({'sub_categories.id': id});
+      let categoryName = CateEntity.name;
+      CateEntity.sub_categories.forEach(item => {
+        if (item.id === id) {
+          categoryName += '/' + item.name;
+        }
+      })
+      return categoryName;
+    } catch (e) {
+      console.log('通过category id获取数据失败')
+      throw new Error(err)
+    }
+  }
+
   // 配送方式
   async getDelivery(req, res) {
     try {
