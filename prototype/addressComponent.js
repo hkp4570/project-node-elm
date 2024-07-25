@@ -96,6 +96,42 @@ class AddressComponent extends BaseComponent {
       throw new Error(err);
     }
   }
+
+  // 获取距离
+  async getDistance(from, to, type){
+    const res = await this.fetch('https://restapi.amap.com/v3/distance', {
+      key: this.key,
+      origins: to,
+      destination: from,
+      // type: 1, // 路径计算的方式 0: 步行  1: 驾车
+    })
+    if(res.status === '1'){
+      const positionArr = [];
+      let timeValue;
+      res.results.forEach(item => {
+        timeValue = parseInt(item.duration);
+        let durationtime = Math.ceil(timeValue % 3600 / 60) + '分钟';
+        if(Math.floor(timeValue/3600)){
+          durationtime = Math.floor(timeValue / 3600) + '小时' + durationtime;
+        }
+        positionArr.push({
+          distance: item.distance,
+          order_lead_time: durationtime,
+        })
+      })
+      if(type === 'tiemvalue'){
+        return timeValue;
+      }else{
+        return positionArr;
+      }
+    }else{
+      if (type === 'tiemvalue') {
+        return 2000;
+      } else {
+        throw new Error('调用百度地图测距失败');
+      }
+    }
+  }
 }
 
 export default AddressComponent;
