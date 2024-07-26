@@ -7,7 +7,7 @@ class Rating {
     this.getScores = this.getScores.bind(this);
     this.getTags = this.getTags.bind(this);
   }
-
+  // 评价
   async getRatings(req, res) {
     const restaurant_id = req.params.restaurant_id;
     if (!restaurant_id || !Number(restaurant_id)) {
@@ -19,7 +19,7 @@ class Rating {
       return
     }
     try {
-      const rating = RatingModel.getData(restaurant_id, this.type[0]);
+      const rating = await RatingModel.getData(restaurant_id, this.type[0]);
       res.send(rating);
     } catch (err) {
       console.log('获取评论列表失败', err);
@@ -31,6 +31,7 @@ class Rating {
     }
   }
 
+  // 评分
   async getScores(req, res) {
     const restaurant_id = req.params.restaurant_id;
     if (!restaurant_id || !Number(restaurant_id)) {
@@ -53,6 +54,7 @@ class Rating {
       })
     }
   }
+  // 标签
   async getTags(req,res){
     const restaurant_id = req.params.restaurant_id;
     if (!restaurant_id || !Number(restaurant_id)) {
