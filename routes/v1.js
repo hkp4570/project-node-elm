@@ -4,6 +4,7 @@ import UserHandle from '../controller/v1/user';
 import CaptchasHandle from '../controller/v1/captchas';
 import AddressHandler from '../controller/v1/addresss';
 import SearchHandler from '../controller/v1/search';
+import CartsHandler from '../controller/v1/carts';
 
 const router = express.Router();
 
@@ -14,6 +15,9 @@ router.get('/user', UserHandle.getUserInfo);
 router.post('/captchas', CaptchasHandle.getCaptchas);
 router.get('/users/:user_id/addresses', AddressHandler.getAddress);
 router.post('/users/:user_id/addresses', AddressHandler.getAddress);
+// 检查订单
+router.post('/carts/checkout', CartsHandler.checkout);
+
 // 搜索周边地址
 router.get('/pois',SearchHandler.search);
 
