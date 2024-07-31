@@ -46,14 +46,14 @@ class Carts extends AddressComponent {
       let delivery_reach_time; //到达时间
       let from = geohash.split(',')[0] + ',' + geohash.split(',')[1];
       try {
-        payments = await paymentModel.find({}, '_id');
+        payments = await paymentModel.find({});
         cart_id = await this.getId('cart_id');
         restaurant = await shopModel.findOne({id: restaurant_id});
         const to = restaurant.latitude + ',' + restaurant.longitude;
         deliver_time = await this.getDistance(from, to, 'tiemvalue');
         let time = new Date().getTime() + deliver_time * 1000;
-        let hour = ('0' + new Date(time).getHours()).substring(-2);
-        let minute = ('0' + new Date(time).getMinutes()).substring(-2);
+        let hour = ('0' + new Date(time).getHours()).substr(-2);
+        let minute = ('0' + new Date(time).getMinutes()).substr(-2);
         delivery_reach_time = hour + ':' + minute;
       } catch (err) {
         console.log('获取数据数据失败', err);

@@ -14,7 +14,7 @@ router.get('/exactaddress', CityHandle.getExactAddress);
 router.get('/user', UserHandle.getUserInfo);
 router.post('/captchas', CaptchasHandle.getCaptchas);
 router.get('/users/:user_id/addresses', AddressHandler.getAddress);
-router.post('/users/:user_id/addresses', AddressHandler.getAddress);
+router.post('/users/:user_id/addresses', AddressHandler.addAddress);
 // 检查订单
 router.post('/carts/checkout', CartsHandler.checkout);
 
