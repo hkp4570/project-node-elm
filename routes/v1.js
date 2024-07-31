@@ -5,6 +5,7 @@ import CaptchasHandle from '../controller/v1/captchas';
 import AddressHandler from '../controller/v1/addresss';
 import SearchHandler from '../controller/v1/search';
 import CartsHandler from '../controller/v1/carts';
+import RemarkHandler from '../controller/v1/remark';
 
 const router = express.Router();
 
@@ -17,8 +18,8 @@ router.get('/users/:user_id/addresses', AddressHandler.getAddress);
 router.post('/users/:user_id/addresses', AddressHandler.addAddress);
 // 检查订单
 router.post('/carts/checkout', CartsHandler.checkout);
-
 // 搜索周边地址
 router.get('/pois',SearchHandler.search);
+router.get('/carts/:cart_id/remarks', RemarkHandler.getRemarks);
 
 export default router;
