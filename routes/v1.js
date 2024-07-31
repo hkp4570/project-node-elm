@@ -6,6 +6,7 @@ import AddressHandler from '../controller/v1/addresss';
 import SearchHandler from '../controller/v1/search';
 import CartsHandler from '../controller/v1/carts';
 import RemarkHandler from '../controller/v1/remark';
+import OrderHandler from '../controller/v1/order';
 
 const router = express.Router();
 
@@ -21,5 +22,7 @@ router.post('/carts/checkout', CartsHandler.checkout);
 // 搜索周边地址
 router.get('/pois',SearchHandler.search);
 router.get('/carts/:cart_id/remarks', RemarkHandler.getRemarks);
+// 下单
+router.post('/users/:user_id/carts/:cart_id/orders', OrderHandler.postOrder);
 
 export default router;
