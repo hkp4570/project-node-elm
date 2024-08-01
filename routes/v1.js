@@ -24,5 +24,12 @@ router.get('/pois',SearchHandler.search);
 router.get('/carts/:cart_id/remarks', RemarkHandler.getRemarks);
 // 下单
 router.post('/users/:user_id/carts/:cart_id/orders', OrderHandler.postOrder);
+router.get('/payment/queryOrder', (req, res) => {
+  res.send({
+    status: 0,
+    type: 'PAY_FAILED',
+    message: '暂不开放支付功能',
+  });
+})
 
 export default router;

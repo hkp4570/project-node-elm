@@ -1,6 +1,7 @@
 import BaseComponent from "../../prototype/baseComponent";
 import OrderModel from '../../models/bos/order';
 import CartModel from '../../models/v1/cart';
+import AddressModel from '../../models/v1/address';
 import Formidable from "formidable";
 import moment from "moment";
 
@@ -147,6 +148,40 @@ class Order extends BaseComponent {
         })
       }
     })
+  }
+
+  async getDetail(req, res) {
+    const {user_id, order_id} = req.params;
+    try {
+      if (!user_id || !Number(user_id)) {
+        throw new Error('user_id参数错误');
+      } else if (!order_id || !Number(order_id)) {
+        throw new Error('order_id参数错误')
+      }
+    } catch (err) {
+      console.log(err.message);
+      res.send({
+        status: 0,
+        type: 'GET_ERROR_PARAM',
+        message: err.message,
+      })
+      return
+    }
+    try{
+      const order = await OrderModel.findOne({id: order_id});
+      const addressDetail = await AddressModel.findOne({id: order.address_id});
+      // const orderDetail = {...order, addressDetail: addressDetail.address, consignee: addressDetail.name, deliver_time: '尽快送达', pay_method: '在线支付',
+      //     phone: addressDetail.phone};
+      const orderDetail = Object.assign(order, {addressDetail: addressDetail.address, consignee: addressDetail.name, deliver_time: '尽快送达', pay_method: '在线支付', phone: addressDetail.phone})
+      res.send(orderDetail);
+    }catch (err) {
+      console.log('获取订单信息失败', err);
+      res.send({
+        status: 0,
+        type: 'ERROR_TO_GET_ORDER_DETAIL',
+        message: '获取订单信息失败'
+      })
+    }
   }
 }
 
